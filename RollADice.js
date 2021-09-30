@@ -8,32 +8,38 @@ d. Repeat till any one of the number has reached 10 times
 e. Find the number that reached maximum times and the one that was for
 minimum times
 */
-var dicecountDictionary = {
-    1: 0,
-    2: 0,
-    3: 0,
-    4: 0,
-    5: 0,
-    6: 0,
-};
-console.log(dicecountDictionary);
-let check = true;
-while(check)
+const diceMap = new Map([
+    [1,0],
+    [2,0],
+    [3,0],
+    [4,0],
+    [5,0],
+    [6,0]
+]);
+let check = 1;
+while(check != 0)
 {
-    let diceValue = Math.floor(Math.random()*6 + 1 );
-    for(value in dicecountDictionary)
-    {
-        if(diceValue == value)
+   var diceValue = (Math.floor(Math.random() * 6) + 1);
+   let value = diceMap.get(diceValue);
+   value++;
+   diceMap.set(diceValue,value);
+   diceMap.forEach((key, value) => {
+      if(value==10)
         {
-            dicecountDictionary[value]++ ;
-        }
-        console.log("The Dice Value is: " + value);
-        if (dicecountDictionary[value] == 10) 
-        {
-            console.log("The Key " + value + " has been repeated for 10 times.");
-            check = false;
-            break;
-        }
-    }
+            console.log("The key which has been printed for 10 times: "+key);
+            check == 0;
+        }  
+    });
 }
-console.log(dicecountDictionary);
+// To find the key which was generated minimum times.
+let minValueKey = 1;
+let minValue = diceMap.get(minValueKey);
+diceMap.forEach((key, value) => {
+  if(minValue > value) 
+  {
+     minValueKey = key;
+     minValue = value;
+  }
+});
+console.log("The key which has been printed for minimum number of times: " + minValueKey + " for "+minValue+ " number of times.");
+console.log(diceMap);
